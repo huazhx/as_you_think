@@ -1,8 +1,8 @@
 package com.example.controller;
 
 import com.google.gson.Gson;
-import com.example.mapper.UserMapper;
-import com.example.pojo.User;
+import com.example.mapper.SubjectLinkMapper;
+import com.example.pojo.SubjectLink;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,15 +12,15 @@ import java.util.List;
 
 @CrossOrigin("*")
 @RestController
-public class UserController {
+public class SubjectLinkController {
     Gson gson = new Gson();
     @Autowired
-    private UserMapper userMapper;
+    private SubjectLinkMapper subjectLinkMapper;
 
     // 测试
     @GetMapping("/test")
     public String register() {
-        List<User> res = userMapper.selectList(null);
+        List<SubjectLink> res = subjectLinkMapper.selectList(null);
         return gson.toJson(res);
     }
 

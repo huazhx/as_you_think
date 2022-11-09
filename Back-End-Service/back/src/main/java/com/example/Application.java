@@ -5,7 +5,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-//@ComponentScan("org.example.controller")
+//@ComponentScan("com.example.controller")
 @MapperScan("com.example.mapper")
 public class Application {
 
