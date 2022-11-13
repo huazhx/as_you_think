@@ -1,6 +1,5 @@
 package com.example.pojo;
 
-import java.time.LocalDateTime;
 
 import lombok.Data;
 
@@ -9,7 +8,7 @@ public class Essays {
     private long id;
     private String title;
     private String author;
-    private LocalDateTime time;
+    private String date;
     private String type;
     private String content;
 }
