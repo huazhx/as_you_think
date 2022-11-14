@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -37,7 +39,11 @@ public class EssaysController {
 
         List<Essays> res = essayMapper.selectList(queryWrapper);
 
-        return gson.toJson(res);
+        Long count = essayMapper.selectCount(null);
+        LinkedHashMap<String, Object> all_data = new LinkedHashMap<>();
+        all_data.put("totalCount", count);
+        all_data.put("artical", res);
+        return gson.toJson(all_data);
     }
 
 }
