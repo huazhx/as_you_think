@@ -42,7 +42,7 @@ public class EssaysController {
         Long count = essayMapper.selectCount(null);
         LinkedHashMap<String, Object> all_data = new LinkedHashMap<>();
         all_data.put("totalCount", count);
-        all_data.put("artical", res);
+        all_data.put("article", res);
         return gson.toJson(all_data);
     }
 
