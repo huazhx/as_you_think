@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head >
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>主页</title>
+
+    <link href="../img/logo.jpg" rel="icon" type="image/x-ico">
+
+    <link rel="stylesheet" href="../css/index.css" >
+    <!-- <link rel="stylesheet" href="../semantic-ui/semantic.min.css"> -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/semantic-ui/2.2.4/semantic.min.css">
+    <link rel="stylesheet" href="../lib/editormd/css/editormd.min.css">
+
+
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.2/dist/jquery.min.js"></script>
+    <script src="../semantic-ui/semantic.min.js"></script>
+    <script src="../lib/waypoints/jquery.waypoints.min.js"></script>
+    <style>
+        body{
+            background-image: url("../img/backimg1.jpg");
+            background-attachment: fixed;
+            background-size: 100%;
+            no-repeat: center top;
+            height: 100%;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+
+    <!--导航栏-->
+    <nav id="nav" class="navication" style="display: none">
+        <div class="ui container">
+            <div class="ui inverted secondary stackable menu">
+                <h2 class="ui olive header item" style="font-family: STSong">如你所想</h2>
+                <!--<div class="right m-item item m-mobile-hide">-->
+                <a href="../pages/index.html" class="active m-item item"><i class="home icon"></i>主页</a>
+                <a href="../pages/select.html" class="m-item item"><i class="book icon"></i>我的文章</a>
+                <a href="../pages/analysis.html" class="m-item item"><i class="pencil alternate icon"></i>统计分析</a>
+            </div>
+        </div>
+        <a href="#" class="ui menu toggle black icon button m-right-top m-mobile-hide" style="display: none">
+            <i class="sidebar icon"></i>
+        </a>
+    </nav>
+
+<!--    遮罩层-->
+    <div class="m-bg-class_outer" style="width: 100%;height: 500px">
+        <img src="../img/bg.jpg" alt="" class="ui m-bg image" style="width: 100% ;height: 100%">
+        <div class="m-bg-class_cover" align="center">
+          
+            <h3 class="m-font-size-text m-margin-top-maxx" align="center">欢迎来到“如你所想”</h3>
+            <hr style="width: 30%">
+            <h5 class="m-font-size-text-init-title m-margin-top-large">“北邮人论坛”</h5>
+            <h5 class="m-font-size-text-init-title">“网上文章资源”</h5>
+
+            <div id="waypoint" class="ui m-margin-top-large" align="center">
+                <a href="../pages/index.html" class="ui circular icon button m-opacity-mini m-item item m-mobile-hide m-index-btn"><i class="home icon"></i>  主页</a>
+                <a href="../pages/select.html" class="ui circular icon button m-opacity-mini m-item item m-mobile-hide m-index-btn"><i class="clone outline icon"></i>  我的文章</a>
+                <a href="../pages/select.html" class="ui circular icon button m-opacity-mini m-item item m-mobile-hide m-index-btn"><i class="pencil alternate icon"></i>  统计分析</a>
+            </div>
+
+            <div class="hiddenDiv"></div>
+        </div>
+
+    </div>
+
+
+<!--功能简介-->
+<div class="m-padded-tb-big animated fadeIn">
+    <div class="ui container">
+        <div class="ui stackable grid">
+            
+            <div class="ui vertical segment">
+
+                <!-- 标题 -->
+                <div class="ui m-container-small m-opacity">
+                    <div class="ui secondary segment " align="center" style="font-size: 18px">
+                        <i class="bookmark icon"></i>功能简介
+                    </div>
+                </div>
+
+                <!--介绍-->
+                <div class="ui padded segment m-padded-tb-large m-opacity">
+                    <div class="ui large aligned mobile reversed stackable grid">
+                        
+                        <div class="wide column ">
+                            <h3 class="ui header" ><a href="#" target="_blank" class="m-black">该网站能做什么？</a></h3>
+                            <p class="m-text m-margin-top-max">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;系统可以爬虫从网上获取相关的文章数据，之后交给分词系统处理并训练模型，之后使用模型将目标文章的索引信息提取出来，并使用结构化的模式存储到索引数据库中。
+                            <br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;在“我的文章”页面，会陈列所有检索过的文章，用户可以通过搜索框查询到想要的文章，通过点击文章标题去查询相应文章的详细信息，同时也可以通过"添加新的文章"按钮来上传新的文章，并获取文章的关键词。
+                            <br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;网站还具备统计功能，通过对所有检索的文章的数据进行统计，以可视化的方式展示已检索的文章的分类等。
+                        </p>
+                        </div>
+                    
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--功能示例-->
+<div class="m-padded-tb-big animated fadeIn">
+    <div class="ui container">
+        <div class="ui stackable grid">
+            <div class="ui vertical segment">
+                <div class="ui m-container-small m-opacity">
+                    <div class="ui secondary segment " align="center" style="font-size: 18px">
+                        <i class="bookmark icon"></i>功能示例
+                    </div>
+                </div>
+             
+                <div class="ui padded segment m-padded-tb-large m-opacity">
+                    <div class="ui large aligned mobile reversed stackable grid">
+                        <div class="wide column">
+                            <h3 class="ui header" ><a href="#" target="_blank" class="m-black">文章标题：HBase</a></h3>
+                            <p class="m-text m-margin-top-max">HBase – Hadoop Database，是一个高可靠性、高性能、面向列、可伸缩的分布式存储系统，利用HBase技术可在廉价PC Server上搭建起大规模结构化存储集群。<br>与FUJITSU Cliq等商用大数据产品不同，HBase是GoogleBigtable的开源实现，类似GoogleBigtable利用GFS作为其文件存储系统，HBase利用HadoopHDFS作为其文件存储系统；Google运行MapReduce来处理Bigtable中的海量数据，HBase同样利用HadoopMapReduce来处理HBase中的海量数据；Google Bigtable利用 Chubby作为协同服务，HBase利用Zookeeper作为对应。
+                            </p>
+                            <h4 >文章主题</p>
+                            <div class="ui m-margin-top-max grid">
+                                <div class="eleven wide column">
+                                    <div class="ui mini horizontal link list">
+                                        <div class="item">
+                                            <i class="calendar icon"></i><span>2022-11-12</span>
+                                        </div>
+                                        <div class="item">
+                                            <i class="clone outline icon"></i>
+                                            <span>类别</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    // 导航栏显示
+    var waypoint = new Waypoint({
+        element: document.getElementById('waypoint'),
+        handler: function(direction) {
+            if (direction == 'down') {
+                $('#nav').show(500);
+            } else {
+                $('#nav').hide(500);
+            }
+            console.log('Scrolled to waypoint!  ' + direction);
+        }
+    })
+</script>
+</body>
+</html>
+
