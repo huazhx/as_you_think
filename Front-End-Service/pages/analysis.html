@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head >
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>统计分析</title>
+
+    <link href="../img/logo.jpg" rel="icon" type="image/x-ico">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/semantic-ui/2.2.4/semantic.min.css">
+    <link rel="stylesheet" href="../css/typo.css" >
+    <link rel="stylesheet" href="../css/animate.css" >
+    <link rel="stylesheet" href="../lib/prism/prism.css" >
+    <link rel="stylesheet" href="../lib/tocbot/tocbot.css">
+    <link rel="stylesheet" href="../css/index.css" >
+    <link rel="stylesheet" href="../css/timeline.css" >
+
+
+    <link rel="stylesheet" href="../lib/editormd/css/editormd.min.css">
+
+
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.2/dist/jquery.min.js"></script>
+    <script src="../semantic-ui/semantic.min.js"></script>
+
+    <script src="../js/echarts.min.js"></script>
+    <style>
+        
+    </style>
+</head>
+<body>
+    <!--导航栏-->
+    <nav id="nav" class="navication">
+        <div class="ui container">
+            <div class="ui inverted secondary stackable menu">
+                <h2 class="ui olive header item" style="font-family: STSong">如你所想</h2>
+                <!--<div class="right m-item item m-mobile-hide">-->
+                <a href="../pages/index.html" class="m-item item"><i class="home icon"></i>主页</a>
+                <a href="../pages/select.html" class="m-item item"><i class="book icon"></i>我的文章</a>
+                <a href="../pages/analysis.html" class="m-item item"><i class="pencil alternate icon"></i>统计分析</a>
+            </div>
+        </div>
+        <a href="#" class="ui menu toggle black icon button m-right-top m-mobile-show">
+            <i class="sidebar icon"></i>
+        </a>
+    </nav>
+
+    <!--标题-->
+    <div class="m-bg-type_outer" style="width: 100%;height: 40%">
+      <img src="../img/bg.jpg" alt="" class="ui m-bg image" style="width: 100%;height: 100%">
+      <div class="m-bg-class_cover">
+        <div class="ui container" style="position: relative ;bottom: -350px;">
+          <h2 class="m-font-size-title-large" align="center">统计分析</h2>
+          <div class="ui container" align="center">
+            <div class="ui horizontal link list" align="center">
+              <div class="item">
+                <span class="m-font-size-text-mini">可以在下方自由选择要展示的图表，同时也可以进行下载</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 中间内容展示 -->
+    <div id="waypoint" class="m-margin- animated fadeIn">
+        <div class="ui container m-opacity box-shadow-max">
+            <!--内容-->
+            <div class="ui attached padded segment">
+                <div id="echart1" style="width: 550px;height: 420px;"></div>
+                <div id="echart2" style="width: 550px;height: 420px;"></div>
+            </div>
+        </div>
+    </div>
+  
+ 
+   
+<script src="../js/vue.js"></script>
+<script src="../element-ui/lib/index.js"></script>
+<link rel="stylesheet" href="../element-ui/lib/theme-chalk/index.css">
+<script src="../js/axios-0.18.0.js"></script>
+
+
+<script>
+    new Vue({
+        el:"#app",
+        mounted(){
+            this.selectAll();
+            
+        },
+        methods: {
+            //查询所有数据
+            selectAll(){
+                axios({
+                    method:"get",
+                    url:"10.28.250.213:8080/test01",
+                }).then(resp =>{
+                    console.log(resp);
+                    //设置表格数据
+                    this.tableData=resp.data;
+                })
+            },
+
+            //添加文章
+            addArticle(){
+
+            },
+
+            //多选框的选择
+            handleSelect(key, keyPath) {
+                console.log(key, keyPath);
+            },
+
+            handleSelectionChange(val) {
+                this.multipleSelection = val;
+            },
+
+
+            //分页
+            handleSizeChange(val) {
+                //console.log(`每页 ${val} 条`);
+                // 重新设置每页显示的条数
+                this.pageSize  = val;
+            },
+            handleCurrentChange(val) {
+                //console.log(`当前页: ${val}`);
+                // 重新设置当前页码
+                this.currentPage  = val;
+            },
+
+            //上传文件
+            submitUpload() {
+              this.$refs.upload.submit();
+            },
+            handleRemove(file, fileList) {
+              console.log(file, fileList);
+            },
+            handlePreview(file) {
+              console.log(file);
+            },
+        },
+        data() {
+            return {
+                activeIndex: '',
+
+                tableData: [],
+                multipleSelection: [],
+
+                // 每页显示的条数
+                pageSize:5,
+                // 总记录数
+                totalCount:100,
+                // 当前页码
+                currentPage: 1,
+                //是否隐藏分页条，当数据只有一页时隐藏
+                ifHide: true,
+
+                //上传的文件
+                fileList:[],
+
+
+
+            }
+        }
+    })
+    var echart1 = echarts.init(document.getElementById('echart1'))
+
+    //4.准备配置项（不同的图表只有这个不同）
+    var xDataArr=['类别1', '类别2', '类别3', '类别4','类别5','类别6','类别7','类别8', '类别9']
+    var yDataArr=[3000,2800,900,1000,800,700,1400,1300,900]
+
+    var option1 = {
+        title: {
+            text: '按不同类别统计',
+        },
+        //x轴
+        xAxis: {
+            type: 'category',
+            data: xDataArr,
+            //紧挨边缘
+            boundaryGap:false,//没有间隔
+
+        },
+        //y轴
+        yAxis: {
+            type: 'value',
+            //脱离0值比例
+            scale: true,
+        },
+        //工具栏
+        toolbox: {
+            feature: {
+                saveAsImage: {},//导出图片
+                dataView: {},//数据视图
+                restore: {},//重置
+                dataZoom: {},//区域缩放
+                magicType: {//动态图表类型的切换
+                    type: ['bar','line']
+                }
+            }
+        },
+        //系列
+        series: {
+            name: '类别',
+            //line代表折线图
+            type: 'line',
+            data: yDataArr,
+
+            //标记
+            markPoint: {
+                data: [
+                    {type: 'max',name:'最大值'},
+                    {type: 'min',name:'最小值'}
+                ]
+            },
+            markLine: {
+                data: [
+                    {type: 'average',name:'平均值'},
+                ]
+            },
+            //线条控制
+            smooth: true,//平滑效果
+            lineStyle: {
+                color: 'blue',
+                type: 'dashed',//dashed虚线，dotted点线，solid实线
+            },
+
+            //填充风格
+            areaStyle: {
+                color: 'pink',
+            },
+
+        },
+
+    }
+    //将配置项设置给echarts实例对象
+    echart1.setOption(option1)
+</script>
+</body>
+</html>
+
