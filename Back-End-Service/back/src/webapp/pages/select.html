@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head >
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>我的文章</title>
+    <link href="../img/logo.jpg" rel="icon" type="image/x-ico">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/semantic-ui/2.2.4/semantic.min.css">
+    <link rel="stylesheet" href="../css/typo.css" >
+    <link rel="stylesheet" href="../css/animate.css" >
+    <link rel="stylesheet" href="../lib/prism/prism.css" >
+    <link rel="stylesheet" href="../lib/tocbot/tocbot.css">
+    <link rel="stylesheet" href="../css/index.css" >
+    <link rel="stylesheet" href="../css/timeline.css" >
+
+
+    <link rel="stylesheet" href="../lib/editormd/css/editormd.min.css">
+
+
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.2/dist/jquery.min.js"></script>
+    <script src="../semantic-ui/semantic.min.js"></script>
+    <style>
+        
+    </style>
+</head>
+<body>
+<div id="app">
+    <!--导航栏-->
+    <nav id="nav" class="navication">
+        <div class="ui container">
+            <div class="ui inverted secondary stackable menu">
+                <h2 class="ui olive header item" style="font-family: STSong">如你所想</h2>
+                <!--<div class="right m-item item m-mobile-hide">-->
+                <a href="../pages/index.html" class="m-item item"><i class="home icon"></i>主页</a>
+                <a href="../pages/select.html" class="m-item item"><i class="book icon"></i>我的文章</a>
+                <a href="../pages/uploadPicture.html" class="m-item item"><i class="pencil alternate icon"></i>图片检索</a>
+            </div>
+        </div>
+    </nav>
+    <!--标题-->
+    <div class="m-bg-type_outer" style="width: 100%;height: 40%">
+      <!-- <img src="../img/bg.jpg" alt="" class="ui m-bg image" style="width: 100%;height: 100%"> -->
+      <img src="../img/bg.jpg" alt="" class="ui m-bg image" style="height: 350px">
+      <div class="m-bg-class_cover">
+        <div class="ui container" style="position: relative ;bottom: -350px;">
+          <h2 class="m-font-size-title-large" align="center">已检索过的文章</h2>
+          <div class="ui container" align="center">
+            <div class="ui horizontal link list" align="center">
+              <div class="item">
+                <span class="m-font-size-text-mini">这里列举了已经检索过的文章，可以通过点击文章标题去查看相应的文章以及提取的主题</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 中间内容展示 -->
+    <div id="waypoint" class="m-margin- animated fadeIn">
+        <div class="ui container  m-opacity box-shadow-max">
+            <!--内容-->
+            <div class="ui attached padded segment">
+              
+                <!--表单展示：标题，创建时间，类别-->
+                <template>
+                    <el-table
+                            ref="multipleTable"
+                            :data="tableData"
+                            tooltip-effect="dark"
+                            style="width: 100%"
+                    >
+                        <el-table-column
+                                prop="title"
+                                label="文章标题"
+                                width="250"
+                                show-overflow-tooltip>
+                        </el-table-column>
+                        <el-table-column
+                                prop="author"
+                                label="作者"
+                                width="190"
+                                show-overflow-tooltip>
+                        </el-table-column>
+                        <el-table-column
+                                prop="date"
+                                label="检索时间"
+                                width="200">
+                        </el-table-column>
+                        <el-table-column
+                                prop="type"
+                                label="文章类别"
+                                width="150">
+                        </el-table-column>
+                        <el-table-column
+                            label="操作">
+                            <template slot-scope="scope">
+                                <el-row>
+                                    <el-button type="primary" @click="readDetial(scope.row)">查看详细信息</el-button>
+                                </el-row>
+                            </template>
+                        </el-table-column>
+                    </el-table>
+                </template>
+
+                <!--分页展示-->
+                <el-pagination
+                    id="pagePart"
+                    :hide-on-single-page="ifHide"
+                    @size-change="handleSizeChange"
+                    @current-change="handleCurrentChange"
+                    :current-page="currentPage"
+                    :page-sizes="[10]"
+                    :page-size="10"
+                    layout="total, sizes, prev, pager, next, jumper"
+                    :total="totalCount">
+                </el-pagination>
+
+                <div style="margin-top: 20px">
+                  <el-upload
+                    class="upload-demo"
+                    ref="upload"
+                    action="https://jsonplaceholder.typicode.com/posts/"
+                    :on-preview="handlePreview"
+                    :on-remove="handleRemove"
+                    :file-list="fileList"
+                    :auto-upload="false">
+                    <el-button slot="trigger" type="primary">添加新的检索文章</el-button>
+                    <el-button style="margin-left: 10px; color: E4E7ED;"  @click="submitUpload">上传到服务器</el-button>
+                    <!-- <div slot="tip" class="el-upload__tip">只能选择word文件</div> -->
+                  </el-upload>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="../js/vue.js"></script>
+<script src="../element-ui/lib/index.js"></script>
+<link rel="stylesheet" href="../element-ui/lib/theme-chalk/index.css">
+<script src="../js/axios-0.18.0.js"></script>
+<script type="text/javascript" src="../js/jquery.min.js"></script>
+
+<script>
+    new Vue({
+        el:"#app",
+        mounted(){
+            this.selectAll();
+        },
+        methods: {
+            //查询所有数据
+            selectAll(){
+                axios({
+                    methods:"get",
+                    url:"http://101.200.61.91:8080/selectAll?page="+this.currentPage
+                }).then(res=>{
+                    this.tableData=res.data.article;
+                    this.totalCount=res.data.totalCount;
+                })
+            },
+            //查看详细信息
+            readDetial(row){
+                this.article.id=row.id;
+                console.log(this.article.id)
+
+                axios({
+                    methods:"get",
+                    url:"http://101.200.61.91:8080/selectSingle?id="+this.article.id,
+                }).then(res=>{
+                    if(res.data.code==200){
+                        location.href = "../pages/show.html";
+                    }
+                })
+            },
+
+            //添加文章
+            addArticle(){
+                
+            },
+
+
+            //分页
+            handleSizeChange(val) {
+                //console.log(`每页 ${val} 条`);
+                // 重新设置每页显示的条数
+                this.pageSize  = val;
+                this.selectAll();
+            },
+            handleCurrentChange(val) {
+                //console.log(`当前页: ${val}`);
+                // 重新设置当前页码
+                this.currentPage  = val;
+                this.selectAll();
+            },
+
+            //上传文件
+            submitUpload() {
+              this.$refs.upload.submit();
+            },
+            handleRemove(file, fileList) {
+              console.log(file, fileList);
+            },
+            handlePreview(file) {
+              console.log(file);
+            },
+        },
+        data() {
+            return {
+                dialogVisible: false,
+                activeIndex: '',
+
+                tableData: [],
+                multipleSelection: [],
+
+                //文章
+                article: {
+                    id:'',
+                    title:'',
+                    author:'',
+                    date:'',
+                    type:'',
+                    content:''
+                },
+                // 每页显示的条数
+                pageSize:10,
+                // 总记录数
+                totalCount:100,
+                // 当前页码
+                currentPage: 1,
+
+                //是否隐藏分页条，当数据只有一页时隐藏
+                ifHide: true,
+                //上传的文件
+                fileList:[],
+
+            }
+        }
+    })
+
+</script>
+</body>
+</html>
+

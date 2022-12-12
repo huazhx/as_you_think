@@ -11,4 +11,5 @@ public class Essays {
     private String date;
     private String type;
     private String content;
+    private String keyWord;
 }

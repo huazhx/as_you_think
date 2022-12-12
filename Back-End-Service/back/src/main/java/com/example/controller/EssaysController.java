@@ -4,6 +4,8 @@ import com.google.gson.Gson;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.example.mapper.EssaysMapper;
 import com.example.pojo.Essays;
+import com.example.pojo.Probability;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,6 +17,9 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 @CrossOrigin("*")
 @RestController
 public class EssaysController {
@@ -22,8 +27,9 @@ public class EssaysController {
     @Autowired
     private EssaysMapper essayMapper;
 
-    @GetMapping("/test01")
-    public String register(@RequestParam Map<String, Object> map) {
+    //分页查询所有的数据
+    @GetMapping("/selectAll")
+    public String selectAll(@RequestParam Map<String, Object> map) {
         QueryWrapper<Essays> queryWrapper = new QueryWrapper<>();
         int page_number, start, end, base;
         String page = (String)map.get("page");
@@ -34,7 +40,7 @@ public class EssaysController {
         end = base * page_number;
         start = end - base;
 
-        queryWrapper.gt("id", start - 1);
+        queryWrapper.gt("id", start);
         queryWrapper.lt("id", end + 1);
 
         List<Essays> res = essayMapper.selectList(queryWrapper);
@@ -46,4 +52,62 @@ public class EssaysController {
         return gson.toJson(all_data);
     }
 
+    //具体展示某一条数据
+    @GetMapping("/selectSingle")
+    public LinkedHashMap<String, Object> selectSingle(@RequestParam Map<String, Object> map, HttpServletRequest request) {
+        QueryWrapper<Essays> queryWrapper = new QueryWrapper<>();
+        long id = Long.valueOf((String)map.get("id"));
+        
+        queryWrapper.eq("id", id);
+        Essays article = essayMapper.selectOne(queryWrapper);
+
+        LinkedHashMap<String, Object> all_data = new LinkedHashMap<>();
+        all_data.put("code", 200);
+        all_data.put("article", article);
+
+        HttpSession session = request.getSession(true);
+        session.setAttribute("id", id);
+
+        return all_data;
+        //return gson.toJson(all_data);
+    }
+
+    //提供各文章的各主题群概率
+    @GetMapping("/showProbability")
+    public LinkedHashMap<String, Object> showProbability(@RequestParam Map<String, Object> map) {
+        QueryWrapper<Essays> queryWrapper = new QueryWrapper<>();
+        long id = Long.valueOf((String)map.get("id"));
+        
+        queryWrapper.eq("id", id);
+        Essays article = essayMapper.selectOne(queryWrapper);
+
+        String type = article.getType();
+
+        String[] result = type.split(",");
+        String[] key = type.split(",");
+
+        LinkedHashMap<String, Object> probability  = new LinkedHashMap<>();
+        LinkedHashMap<Integer, Object> all_data = new LinkedHashMap<>();
+
+        for (int i = 1; i < 10; i++) {
+
+            if(i == 9){
+                result[i] = result[i].substring(1, result[i].length() - 1);
+            }else {
+                result[i] = result[i].substring(1, result[i].length());
+            }
+            key[i] = "topic" + (i - 1);
+
+            Probability res = new Probability();
+            res.setType(key[i]);
+            res.setNumber(result[i]);
+            all_data.put(i, res);
+            //all_data.put(key[i], result[i]);
+            
+
+            probability.put("probability", all_data);
+        }
+        
+        return probability;
+    }
 }

@@ -1,0 +1,93 @@
+html {
+	height: 100%;
+	width: 100%;
+	overflow: hidden;
+
+	background: url(../img/bg_login.png) no-repeat;
+	background-size: 100% 100%;
+}
+
+body {
+	/*display: flex;
+	align-items: center;
+	justify-content: center;*/
+
+	height: 100%;
+	/*width: 100%;*/
+}
+
+#app {
+	/*display: flex;
+	justify-content: center;
+	align-items: center;*/
+
+	/*margin: auto auto;*/
+	/*margin-top: 15%;*/
+
+	width: 34%;
+	height: 320px;
+	background-color: rgba(255, 255, 255, 0.7);
+	box-shadow: 7px 7px 17px rgba(52, 56, 66, 0.5);
+	border-radius: 8px;
+
+	transition: all 0.2s;
+}
+
+#app:hover {
+	box-shadow: 1px -1px 5px 5px  rgba(0, 0, 0, 0.2);
+}
+
+#logo {
+	float: left;
+}
+
+p {
+	margin-top: 20px;
+	margin-left: 20px;
+}
+
+#title{
+	text-align: center;
+}
+
+#errorMsg{
+	text-align: center;
+	color:red;
+}
+
+.input_text {
+	width: 204px;
+	margin-left: 15px;
+	border-radius: 5px;
+	border-style: hidden;
+	height: 30px;
+	background-color: rgba(210, 212, 213, 0.5);
+	outline: none;
+	padding-left: 10px;
+}
+
+#subDiv {
+	margin-top: 20px;
+	margin-left: 20px;
+}
+
+a:hover {
+	font-weight: bold;
+	text-decoration: underline;
+}
+
+.button {
+	border-color: cornsilk;
+	background-color: rgba(100, 149, 237, .7);
+	color: aliceblue;
+	border-style: hidden;
+	border-radius: 5px;
+	width: 76px;
+	height: 31px;
+	font-size: 16px;
+}
+#smallWord{
+	font-size: small;
+	font-weight: normal;
+	text-align: justify;
+}

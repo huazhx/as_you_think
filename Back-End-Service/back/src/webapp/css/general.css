@@ -1,0 +1,25 @@
+		* {
+			/*清除内外边距，基本上是必写的*/
+			margin: 0;
+			padding: 0;	
+		}
+		ul {
+			list-style: none;
+		}
+		a {
+			text-decoration: none;
+		}
+		input {
+			border: none;
+			box-sizing: border-box;/*不会撑开*/
+		}
+		.clearfix:before,.clearfix:after{
+			display: table;
+			content: "";
+		}
+		.clearfix:after {
+			clear: both;
+		}
+		.clearfix {
+			*zoom: 1;
+		}
