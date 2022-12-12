@@ -6,10 +6,3 @@ import com.example.pojo.Probability;
 public interface ProbabilityMapper extends BaseMapper<Probability> {
     
 }
-
-
-
-
-
-
-
