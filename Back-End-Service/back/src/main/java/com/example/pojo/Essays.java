@@ -1,6 +1,5 @@
 package com.example.pojo;
 
-
 import lombok.Data;
 
 @Data

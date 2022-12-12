@@ -4,6 +4,7 @@ import lombok.Data;
 
 @Data
 public class Probability {
-    private String type;
-    private String number;
+    private String name;
+    private double value;
+    private String other;
 }
